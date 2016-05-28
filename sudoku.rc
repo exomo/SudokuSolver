@@ -1,0 +1,87 @@
+/**************************************************************************
+ *  Copyright 2016 Kai Bublitz (exomo)                                    *
+ *                                                                        *
+ *  This file is part of the program SudokuSolver.                        *
+ *                                                                        *
+ *  SudokuSolver is free software: you can redistribute it and/or modify  *
+ *  it under the terms of the GNU General Public License as published by  *
+ *  the Free Software Foundation, either version 3 of the License, or     *
+ *  (at your option) any later version.                                   *
+ *                                                                        *
+ *  SudokuSolver is distributed in the hope that it will be useful,       *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *  GNU General Public License for more details.                          *
+ *                                                                        *
+ *  You should have received a copy of the GNU General Public License     *
+ *  along with SudokuSolver.  If not, see <http://www.gnu.org/licenses/>. *
+ *                                                                        *
+ **************************************************************************/
+
+#include <windows.h>
+#include <commctrl.h>
+#include "gui.h"
+
+IDM_MANIFEST RT_MANIFEST "SudokuSolver.exe.Manifest"
+
+IDI_ICON ICON "sudoku.ico"
+IDI_ICONSMALL ICON "sudoku_small.ico"
+
+IDC_MAINMENU MENU
+BEGIN
+    POPUP "&Programm"
+    BEGIN
+        MENUITEM "&Beenden",                    IDC_END
+    END
+    POPUP "&Größe"
+    BEGIN
+        MENUITEM "4x4",                         IDC_4x4
+        MENUITEM "9x9",                         IDC_9x9
+        MENUITEM "12x12 (hohe Kästchen)",       IDC_12x12_1
+        MENUITEM "12x12 (breite Kästchen)",     IDC_12x12_2
+        MENUITEM "Andere Größe (Chaos) ...",    IDC_OTHERSIZE
+    END
+    POPUP "&Rätsel"
+    BEGIN
+        MENUITEM "&Lösen",                      IDOK
+        MENUITEM "Zurü&cksetzen",               IDC_CLEAR
+        MENUITEM "Chaoseingabe",                IDC_CHAOS
+        MENUITEM SEPARATOR
+        MENUITEM "&Speichern",                  IDC_SAVE
+        MENUITEM "La&den",                      IDC_LOAD
+    END
+    POPUP "&Hilfe"
+    BEGIN
+        MENUITEM "&Info",                       IDM_ABOUT
+    END
+END
+
+IDD_SUDOKU DIALOG 0, 0, 350, 170
+STYLE DS_CENTER | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "Sudoku Solver"
+MENU IDC_MAINMENU
+BEGIN
+    PUSHBUTTON "Clear", IDC_CLEAR, 60, 150, 30, 15
+    DEFPUSHBUTTON "Lösen", IDOK, 10, 150, 40, 15
+    EDITTEXT IDC_SOLUTION, 160, 20, 180, 140, ES_READONLY | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL | ES_WANTRETURN
+END
+
+IDD_ABOUTBOX DIALOG  22, 17, 230, 75
+STYLE DS_SETFONT | DS_MODALFRAME | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Info"
+FONT 8, "System"
+BEGIN
+    ICON            IDI_ICON,IDC_STATIC,14,9,16,16
+    LTEXT           "Sudoku Solver v. 1.10 (beta)",IDC_STATIC,49,10,119,8,SS_NOPREFIX
+    LTEXT           "2008, 2016 Exomo Software (Kai Bublitz)",IDC_STATIC,49,20,119,8
+    DEFPUSHBUTTON   "OK",IDOK,195,6,30,11,WS_GROUP
+END
+
+IDD_CHOOSESIZE DIALOG 22, 17, 200, 150
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Größe auswählen"
+BEGIN
+    DEFPUSHBUTTON "Ok",IDOK,10,10,30,11
+    EDITTEXT  IDC_SIZENUMBER, 10, 40, 50 , 11, ES_NUMBER
+    CONTROL "UPDOWN", IDC_SPINNER, UPDOWN_CLASS, 0, 0,10, 50, 30
+END
