@@ -1,0 +1,2 @@
+# SudokuSolver
+Solve sudoku puzzles
